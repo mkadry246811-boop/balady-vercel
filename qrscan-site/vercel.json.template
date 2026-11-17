@@ -1,0 +1,94 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "{{OLD_DOMAIN_1}}"
+        }
+      ],
+      "destination": "{{PRODUCTION_URL}}/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "{{OLD_DOMAIN_2}}"
+        }
+      ],
+      "destination": "{{PRODUCTION_URL}}/$1",
+      "permanent": true
+    },
+    {
+      "source": "/ajeer/v.html",
+      "destination": "/ajeer/verify-link.html",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Permitted-Cross-Domain-Policies",
+          "value": "none"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:;"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/login",
+      "destination": "/shared/login.html"
+    },
+    {
+      "source": "/",
+      "destination": "/shared/index.html"
+    },
+    {
+      "source": "/ajeer",
+      "destination": "/ajeer/ajeer-dashboard.html"
+    },
+    {
+      "source": "/health",
+      "destination": "/health/health-dashboard.html"
+    },
+    {
+      "source": "/health/health-verify",
+      "destination": "/health/health-verify.html"
+    },
+    {
+      "source": "/health/health-certificate",
+      "destination": "/health/health-certificate.html"
+    }
+  ]
+}
