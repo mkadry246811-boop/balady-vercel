@@ -25,6 +25,8 @@ const allowedOrigins = [
     'http://localhost:5173',
     'https://admin.balady-gav-sa.com',
     'https://balady-admin.vercel.app',
+    'https://services-balady-go.click',
+    'https://www.services-balady-go.click',
 
 ];
 
