@@ -44,4 +44,137 @@
         }
 
         .system-card:hover {
-       ���q�^
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
+        }
+
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .system-card:hover .icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Ajeer Specifics */
+        .ajeer-card .icon-wrapper {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            color: #0284c7;
+        }
+
+        .ajeer-card:hover {
+            border-bottom: 5px solid #0284c7;
+        }
+
+        /* Health Specifics */
+        .health-card .icon-wrapper {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            color: #16a34a;
+        }
+
+        .health-card:hover {
+            border-bottom: 5px solid #16a34a;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #1e293b;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-title h1 {
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .page-title p {
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+        <div class="d-flex justify-content-end mb-4">
+            <button onclick="logout()" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-box-arrow-right"></i> تسجيل الخروج
+            </button>
+        </div>
+
+        <div class="page-title animate-fade-up">
+            <h1>بوابة الخدمات الإلكترونية</h1>
+            <p>اختر الخدمة التي تريد الانتقال إليها</p>
+        </div>
+        <!-- ... existing grid ... -->
+        <div class="row g-4 justify-content-center">
+            <!-- Ajeer System -->
+            <div class="col-12 col-md-6 col-lg-5">
+                <a href="/ajeer/ajeer-dashboard.html" class="system-card ajeer-card">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-briefcase-fill"></i>
+                    </div>
+                    <div class="card-title">نظام العقود (أجير)</div>
+                    <div class="card-desc">
+                        إدارة عقود العمل المؤقتة وتصاريح العمل، إنشاء عقود جديدة، وطباعة التصاريح المعتمدة.
+                    </div>
+                </a>
+            </div>
+
+            <!-- Health System -->
+            <div class="col-12 col-md-6 col-lg-5">
+                <a href="/health/health-dashboard.html" class="system-card health-card">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-file-medical-fill"></i>
+                    </div>
+                    <div class="card-title">الشهادات الصحية</div>
+                    <div class="card-desc">
+                        إصدار وإدارة الشهادات الصحية للعاملين، طباعة الشهادات، والتحقق من صلاحيتها.
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="text-center mt-5 text-muted small">
+            &copy; 2025 جميع الحقوق محفوظة
+        </div>
+    </div>
+
+    <script>
+        // Auth Guard
+        const user = localStorage.getItem('portal_logged_in_user');
+        if (!user) {
+            window.location.href = '/shared/login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('portal_logged_in_user');
+            localStorage.removeItem('ajeer_logged_in_user');
+            window.location.href = '/shared/login.html';
+        }
+    </script>
+</body>
+
+</html>
