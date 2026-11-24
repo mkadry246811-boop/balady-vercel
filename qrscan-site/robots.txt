@@ -1,8 +1,0 @@
-User-agent: *
-Disallow: /ajeer/
-Disallow: /health/
-Disallow: /shared/js/
-Disallow: /shared/css/
-Allow: /shared/index.html
-Allow: /shared/login.html
-Allow: /
