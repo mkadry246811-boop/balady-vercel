@@ -1,23 +1,28 @@
 const fs = require('fs');
 const path = require('path');
 
-// Load .env file locally (if exists)
+// Load a local .env file when running outside Vercel.
 try {
     const envPath = path.join(__dirname, '.env');
     if (fs.existsSync(envPath)) {
         const envFile = fs.readFileSync(envPath, 'utf8');
-        envFile.split('\n').forEach(line => {
-            const [key, value] = line.split('=');
-            if (key && value) {
-                process.env[key.trim()] = value.trim().replace(/^["']|["']$/g, '');
+        envFile.split(/\r?\n/).forEach((line) => {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith('#')) return;
+            const separator = trimmed.indexOf('=');
+            if (separator < 1) return;
+            const key = trimmed.slice(0, separator).trim();
+            const value = trimmed.slice(separator + 1).trim().replace(/^["']|["']$/g, '');
+            if (key && process.env[key] === undefined) {
+                process.env[key] = value;
             }
         });
     }
-} catch (e) {
-    console.log('No local .env file found, using system environment variables.');
+} catch (error) {
+    console.warn('Could not read local .env file; using process environment variables.');
 }
 
-// 1. Generate shared/js/config.js for Frontend
+// Generate the browser configuration consumed by the static frontend.
 const config = {
     SUPABASE_URL: process.env.SUPABASE_URL || '',
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || '',
@@ -26,12 +31,11 @@ const config = {
     OLD_DOMAIN_1: process.env.OLD_DOMAIN_1 || '',
     OLD_DOMAIN_2: process.env.OLD_DOMAIN_2 || '',
     OFFICIAL_PORTAL_URL: process.env.OFFICIAL_PORTAL_URL || 'https://ajeer.com.sa',
-    isSupabaseEnabled: true // Added this flag to fix dashboard visibility
+    isSupabaseEnabled: true
 };
 
-// Security check: Warn if critical keys are missing
 if (!config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) {
-    console.warn('âš ï¸ WARNING: SUPABASE_URL or SUPABASE_ANON_KEY is missing from environment!');
+    console.warn('WARNING: SUPABASE_URL or SUPABASE_ANON_KEY is missing from the environment.');
 }
 
 const jsContent = `/**
@@ -41,4 +45,10 @@ const jsContent = `/**
 window.CONFIG = ${JSON.stringify(config, null, 4)};
 `;
 
-const targetD¶»§q«^
+const targetDirectory = path.join(__dirname, 'shared', 'js');
+const targetFile = path.join(targetDirectory, 'config.js');
+
+fs.mkdirSync(targetDirectory, { recursive: true });
+fs.writeFileSync(targetFile, jsContent, 'utf8');
+
+console.log('Frontend configuration generated successfully: ' + targetFile);
