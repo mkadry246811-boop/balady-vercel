@@ -1,49 +1,149 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - نظام أمانة الرياض</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول - بوابة الخدمات</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;padding:24px;display:flex;align-items:center;justify-content:center;direction:rtl;font-family:'Cairo',sans-serif;background:linear-gradient(135deg,#1ea36b 0%,#198754 100%)}
+    .login-container{width:100%;max-width:520px;animation:fadeIn .5s ease}
+    .login-card{background:#fff;border-radius:22px;padding:36px;box-shadow:0 20px 60px rgba(0,0,0,.16)}
+    .login-header{text-align:center;margin-bottom:28px}
+    .logo{width:72px;height:72px;border-radius:18px;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1ea36b,#198754);color:#fff;font-size:34px;box-shadow:0 8px 20px rgba(30,163,107,.3)}
+    h1{font-size:1.55rem;font-weight:800;color:#1e293b;margin:0 0 8px}
+    .subtitle{color:#64748b;font-size:.95rem;margin:0}
+    .form-label{font-weight:700;color:#334155;margin-bottom:8px}
+    .form-control{border:2px solid #d1fae5;border-radius:12px;padding:13px 15px;background:#f8fafc;font-family:inherit}
+    .form-control:focus{border-color:#198754;box-shadow:0 0 0 4px rgba(25,135,84,.1);background:#fff}
+    .btn-login{width:100%;border:0;border-radius:12px;padding:13px;background:linear-gradient(135deg,#1ea36b,#198754);color:white;font-weight:800;font-family:inherit;font-size:1rem;margin-top:8px}
+    .btn-login:disabled{opacity:.65}
+    .reset-link{border:0;background:none;color:#64748b;text-decoration:underline;font:inherit;font-size:.88rem}
+    .footer{color:#94a3b8;text-align:center;margin-top:22px;font-size:.8rem}
+    .config-warning{display:none;margin-top:16px;padding:12px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:.85rem;text-align:center}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:520px){.login-card{padding:25px 20px}h1{font-size:1.3rem}}
+  </style>
+</head>
+<body>
+  <main class="login-container">
+    <section class="login-card">
+      <header class="login-header">
+        <div class="logo"><i class="bi bi-shield-lock-fill"></i></div>
+        <h1>بوابة الخدمات الإلكترونية</h1>
+        <p class="subtitle">سجّل الدخول للمتابعة إلى أنظمة أجير والشهادات الصحية</p>
+      </header>
+      <form id="loginForm">
+        <div class="mb-3">
+          <label class="form-label" for="username">اسم المستخدم</label>
+          <input class="form-control" id="username" name="username" type="text" autocomplete="username" placeholder="أدخل اسم المستخدم" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="password">كلمة المرور</label>
+          <input class="form-control" id="password" name="password" type="password" autocomplete="current-password" placeholder="أدخل كلمة المرور" required>
+        </div>
+        <button class="btn-login" id="loginButton" type="submit">تسجيل الدخول <i class="bi bi-arrow-left"></i></button>
+      </form>
+      <div class="text-center mt-3">
+        <button class="reset-link" type="button" data-bs-toggle="modal" data-bs-target="#resetModal">نسيت كلمة المرور؟</button>
+      </div>
+      <div class="config-warning" id="configWarning">إعدادات قاعدة البيانات غير مكتملة على Vercel. يلزم ضبط متغيرات Supabase قبل تسجيل الدخول.</div>
+      <div class="footer">جميع الحقوق محفوظة © 2025</div>
+    </section>
+  </main>
 
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #1ea36b 0%, #198754 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            direction: rtl;
-            padding: 20px;
-        }
+  <div class="modal fade" id="resetModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0" style="border-radius:18px">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">إعادة تعيين كلمة المرور</h5>
+          <button type="button" class="btn-close ms-0" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3"><label class="form-label" for="resetUsername">اسم المستخدم</label><input id="resetUsername" class="form-control" type="text"></div>
+          <div class="mb-3"><label class="form-label" for="masterKey">المفتاح الرئيسي</label><input id="masterKey" class="form-control" type="password"></div>
+          <div class="mb-3"><label class="form-label" for="newPassword">كلمة المرور الجديدة</label><input id="newPassword" class="form-control" type="password"></div>
+          <button type="button" id="resetButton" class="btn btn-success w-100 fw-bold" onclick="handlePasswordReset()">حفظ كلمة المرور الجديدة</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        .login-container {
-            width: 100%;
-            max-width: 900px;
-        }
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/shared/js/config.js"></script>
+  <script src="/shared/js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    const MASTER_KEY = (window.CONFIG && window.CONFIG.MASTER_KEY) || '';
+    document.addEventListener('DOMContentLoaded', () => {
+      const existingUser = localStorage.getItem('portal_logged_in_user');
+      if (existingUser) { window.location.replace('/shared/index.html'); return; }
+      if (!window.supabase || !window.CONFIG || !window.CONFIG.SUPABASE_URL || !window.CONFIG.SUPABASE_ANON_KEY) {
+        document.getElementById('configWarning').style.display = 'block';
+      }
+    });
 
-        .system-header {
-            text-align: center;
-            margin-bottom: 40px;
-            animation: fadeIn 0.6s ease;
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const button = document.getElementById('loginButton');
+      if (!username || !password) return;
+      if (typeof supabaseClient === 'undefined' || !supabaseClient) {
+        Swal.fire('تعذر الاتصال', 'إعدادات Supabase غير مكتملة. لم يتم إرسال أو تغيير أي بيانات.', 'error');
+        return;
+      }
+      button.disabled = true;
+      button.textContent = 'جارٍ التحقق...';
+      try {
+        const { data, error } = await supabaseClient.from('users').select('*').eq('username', username).single();
+        if (error || !data || data.password !== password) {
+          Swal.fire('تعذر تسجيل الدخول', 'اسم المستخدم أو كلمة المرور غير صحيحة.', 'error');
+          return;
         }
+        const sessionUser = { id: data.id, username: data.username, full_name: data.full_name };
+        localStorage.setItem('portal_logged_in_user', JSON.stringify(sessionUser));
+        localStorage.setItem('ajeer_logged_in_user', JSON.stringify(sessionUser));
+        await Swal.fire({icon:'success',title:'تم تسجيل الدخول بنجاح',text:data.full_name || data.username,timer:1200,showConfirmButton:false});
+        window.location.href = '/shared/index.html';
+      } catch (error) {
+        console.error('Login error:', error);
+        Swal.fire('خطأ', 'حدث خطأ أثناء تسجيل الدخول. راجع إعدادات الاتصال.', 'error');
+      } finally {
+        button.disabled = false;
+        button.innerHTML = 'تسجيل الدخول <i class="bi bi-arrow-left"></i>';
+      }
+    });
 
-        .system-header h1 {
-            color: white;
-            font-weight: 800;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .system-header p {
-         ���q�^
+    async function handlePasswordReset() {
+      const username = document.getElementById('resetUsername').value.trim();
+      const masterKey = document.getElementById('masterKey').value;
+      const newPassword = document.getElementById('newPassword').value;
+      if (!username || !masterKey || !newPassword) {
+        Swal.fire('تنبيه', 'يرجى استكمال جميع الحقول.', 'warning'); return;
+      }
+      if (!MASTER_KEY || masterKey !== MASTER_KEY) {
+        Swal.fire('خطأ', 'المفتاح الرئيسي غير صحيح أو غير مضبوط.', 'error'); return;
+      }
+      if (typeof supabaseClient === 'undefined' || !supabaseClient) {
+        Swal.fire('تعذر الاتصال', 'إعدادات Supabase غير مكتملة.', 'error'); return;
+      }
+      const button = document.getElementById('resetButton');
+      button.disabled = true;
+      try {
+        const { error } = await supabaseClient.from('users').update({password:newPassword}).eq('username', username);
+        if (error) throw error;
+        await Swal.fire('تم', 'تم تحديث كلمة المرور.', 'success');
+        bootstrap.Modal.getInstance(document.getElementById('resetModal')).hide();
+      } catch (error) {
+        console.error('Password reset error:', error);
+        Swal.fire('خطأ', 'تعذر تحديث كلمة المرور.', 'error');
+      } finally { button.disabled = false; }
+    }
+  </script>
+</body>
+</html>
